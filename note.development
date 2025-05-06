@@ -1,0 +1,11 @@
+KOST FINDER APP
+
+Setup
+    https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.5&packaging=jar&jvmVersion=17&groupId=id.kostfinder&artifactId=app&name=Kost%20Finder&description=A%20Spring%20Boot%20application%20to%20help%20users%20find%20kosts%20(boarding%20houses)&packageName=id.kostfinder.app&dependencies=lombok,web,mysql,data-jpa,actuator,devtools
+
+MySQL
+
+    mysql -u root -p
+
+    Create Database
+        CREATE DATABASE boardinghouse;
