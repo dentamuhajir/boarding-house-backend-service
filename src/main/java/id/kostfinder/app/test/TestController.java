@@ -1,4 +1,4 @@
-package id.kostfinder.app.controller;
+package id.kostfinder.app.test;
 
 
 import org.springframework.http.ResponseEntity;

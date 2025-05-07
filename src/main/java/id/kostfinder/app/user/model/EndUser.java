@@ -4,10 +4,12 @@ package id.kostfinder.app.user.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
+@Data
 @DiscriminatorValue("END_USER")
 public class EndUser extends User {
     private String username;

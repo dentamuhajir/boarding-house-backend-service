@@ -1,6 +1,10 @@
 package id.kostfinder.app.user.repository;
 
+import id.kostfinder.app.user.model.EndUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface EndUserRepository extends JpaRepository<EndUserRepository, Long> {
+@Repository
+public interface EndUserRepository extends JpaRepository<EndUser, Long> {
+
 }
