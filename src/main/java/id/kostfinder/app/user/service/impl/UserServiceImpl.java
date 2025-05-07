@@ -11,16 +11,12 @@ import java.time.LocalDate;
 
 public class UserServiceImpl implements UserService {
     @Autowired
-    AdminRepository adminRepository;
-    @Autowired
     EndUserRepository endUserRepository;
-    @Autowired
-    PropertyOwnerRepository propertyOwnerRepository;
 
     @Override
     public void testUserService() {
         EndUser endUser1 = new EndUser();
-        endUser1.setName("Jane Doe");
+        //endUser1.setName("Jane Doe");
         endUser1.setEmail("jane.doe@example.com");
         endUser1.setPassword("securePassword123");
         endUser1.setUsername("janedoe");
