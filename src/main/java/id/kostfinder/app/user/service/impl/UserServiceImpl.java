@@ -7,7 +7,6 @@ import id.kostfinder.app.user.repository.EndUserRepository;
 import id.kostfinder.app.user.repository.PropertyOwnerRepository;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
 
 public class UserServiceImpl implements UserService {
