@@ -8,10 +8,13 @@ import id.kostfinder.app.user.repository.EndUserRepository;
 import id.kostfinder.app.user.repository.PropertyOwnerRepository;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Random;
 
 @Service
@@ -43,12 +46,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void generateDummyDataEndUser(int amount) {
         Faker faker = new Faker();
-        EndUser endUser = new EndUser();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-
 
         for(int i = 0; i < amount; i++) {
+            EndUser endUser = new EndUser();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date birthday = faker.date().birthday();
+            LocalDate localBirthday = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String firstName = faker.name().firstName();
             String lastName = faker.name().lastName();
             String name = firstName + " " + lastName;
@@ -56,18 +59,18 @@ public class UserServiceImpl implements UserService {
             Random generator = new Random();
             int randomIndex = generator.nextInt(gender.length);
 
-            System.out.println("Name: " + name);
-            System.out.println("Email: " + firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com");
-            System.out.println("Password :" + faker.internet().password());
-            System.out.println("Profile Picture :" + "https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/50/50");
-            System.out.println("Gender: " + gender[randomIndex] );
-            System.out.println("Date of Birth :" + sdf.format(faker.date().birthday()));
-            System.out.println("Username: " + firstName.toLowerCase() + lastName.toLowerCase());
-            System.out.println("Phone Number: " + faker.phoneNumber().cellPhone());
-            System.out.println("Occupation: " + faker.job().title());
-
-            System.out.println("=============================================");
+            endUser.setName(name);
+            endUser.setEmail(firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com");
+            endUser.setPassword(faker.internet().password());
+            endUser.setProfilePicture("https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/50/50");
+            endUser.setGender(gender[randomIndex]);
+            endUser.setUsername(firstName.toLowerCase() + lastName.toLowerCase());
+            endUser.setPhoneNumber(faker.phoneNumber().cellPhone());
+            endUser.setDateOfBirth(localBirthday);
+            endUser.setOccupation(faker.job().title());
+            endUserRepository.save(endUser);
         }
+
 
     }
 
