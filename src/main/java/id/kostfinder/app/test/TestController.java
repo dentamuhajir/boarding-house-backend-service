@@ -22,4 +22,10 @@ public class TestController {
         String result = userService.testUserService();
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/test/generate/user")
+    ResponseEntity<?> testGenerateUser() {
+        userService.generateDummyDataEndUser(10);
+        return ResponseEntity.ok("");
+    }
 }
