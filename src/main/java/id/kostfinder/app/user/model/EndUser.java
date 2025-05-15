@@ -45,4 +45,28 @@ public class EndUser extends User {
     public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
 }

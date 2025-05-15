@@ -1,13 +1,16 @@
 package id.kostfinder.app.user.service;
 
+import id.kostfinder.app.user.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public interface UserService {
-    public String testUserService();
 
     public void generateDummyDataEndUser(int amount);
 
     public void generateDummyDataPropertyOwner();
+    public List<?> getUsers();
 
 
 }
