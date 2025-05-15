@@ -25,7 +25,7 @@ public class TestController {
 
     @GetMapping("/test/generate/user")
     ResponseEntity<?> testGenerateUser() {
-        userService.generateDummyDataEndUser(10);
+        userService.generateDummyDataEndUser(8);
         return ResponseEntity.ok("");
     }
 }
