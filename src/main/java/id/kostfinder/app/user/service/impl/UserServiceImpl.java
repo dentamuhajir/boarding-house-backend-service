@@ -1,6 +1,7 @@
 package id.kostfinder.app.user.service.impl;
 
 import com.github.javafaker.Faker;
+import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.response.Response;
 import id.kostfinder.app.user.model.EndUser;
@@ -66,7 +67,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public GenericResponse getUsers() {
 
-        List<User> users = userRepository.findAll();
+        userRepository = null;
+        try {
+            List<User> users = userRepository.findAll();
+            return GenericResponse.builder()
+                    .code(200)
+                    .message("Success")
+                    .data(users)
+                    .build();
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+
 
 //        for(User user: users) {
 //            System.out.println(user.getName());
@@ -77,11 +89,7 @@ public class UserServiceImpl implements UserService {
 //        response.setMessage("Success");
 //        response.setData(users);
 
-        return GenericResponse.builder()
-                .code(200)
-                .message("Success")
-                .data(users)
-                .build();
+
     }
 
 }
