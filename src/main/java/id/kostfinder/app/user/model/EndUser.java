@@ -5,11 +5,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
+@Setter
+@Getter
 @DiscriminatorValue("END_USER")
 public class EndUser extends User {
     private String username;
@@ -22,51 +25,4 @@ public class EndUser extends User {
     private String gender;
     private String occupation;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getProfilePicture() {
-        return profilePicture;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getOccupation() {
-        return occupation;
-    }
 }
