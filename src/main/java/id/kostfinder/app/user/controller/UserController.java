@@ -27,8 +27,7 @@ public class UserController {
 
     @GetMapping(value = "/users")
     ResponseEntity<?> getUsers() {
-        Response users = userService.getUsers();
-        System.out.println(users);
+        GenericResponse users = userService.getUsers();
         return ResponseEntity.ok(users);
     }
 

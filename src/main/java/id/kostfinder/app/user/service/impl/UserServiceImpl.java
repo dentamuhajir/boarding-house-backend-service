@@ -64,28 +64,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response getUsers() {
+    public GenericResponse getUsers() {
 
         List<User> users = userRepository.findAll();
 
-        for(User user: users) {
-            System.out.println(user.getName());
-        }
+//        for(User user: users) {
+//            System.out.println(user.getName());
+//        }
+//
+//        Response response = new Response();
+//        response .setRc("000");
+//        response.setMessage("Success");
+//        response.setData(users);
 
-//        GenericResponse.builder()
-//                .data(users)
-//                .build();
-
-//        Response.builder()
-//                .rc("100")
-//                .build();
-
-        Response response = new Response();
-        response .setRc("000");
-        response.setMessage("Success");
-        response.setData(users);
-        return response;
-
+        return GenericResponse.builder()
+                .code(200)
+                .message("Success")
+                .data(users)
+                .build();
     }
 
 }
