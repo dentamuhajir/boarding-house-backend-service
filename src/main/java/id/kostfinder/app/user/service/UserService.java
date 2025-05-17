@@ -1,5 +1,7 @@
 package id.kostfinder.app.user.service;
 
+import id.kostfinder.app.response.GenericResponse;
+import id.kostfinder.app.response.Response;
 import id.kostfinder.app.user.model.User;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,7 @@ public interface UserService {
     public void generateDummyDataEndUser(int amount);
 
     public void generateDummyDataPropertyOwner();
-    public List<?> getUsers();
+    public Response getUsers();
 
 
 }

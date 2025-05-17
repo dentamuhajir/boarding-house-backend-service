@@ -1,6 +1,8 @@
 package id.kostfinder.app.user.service.impl;
 
 import com.github.javafaker.Faker;
+import id.kostfinder.app.response.GenericResponse;
+import id.kostfinder.app.response.Response;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.model.User;
 import id.kostfinder.app.user.repository.AdminRepository;
@@ -23,6 +25,8 @@ import java.util.Random;
 public class UserServiceImpl implements UserService {
     @Autowired
     private EndUserRepository endUserRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void generateDummyDataEndUser(int amount) {
@@ -43,7 +47,8 @@ public class UserServiceImpl implements UserService {
             endUser.setName(name);
             endUser.setEmail(firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com");
             endUser.setPassword(faker.internet().password());
-            endUser.setProfilePicture("https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/50/50");
+            //endUser.setProfilePicture("https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/50/50");
+            endUser.setProfilePicture("https://i.pravatar.cc/50?img=" + faker.number().numberBetween(1,70));
             endUser.setGender(gender[randomIndex]);
             endUser.setUsername(firstName.toLowerCase() + lastName.toLowerCase());
             endUser.setPhoneNumber(faker.phoneNumber().cellPhone());
@@ -51,8 +56,6 @@ public class UserServiceImpl implements UserService {
             endUser.setOccupation(faker.job().title());
             endUserRepository.save(endUser);
         }
-
-
     }
 
     @Override
@@ -61,16 +64,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<?> getUsers() {
+    public Response getUsers() {
 
-        List<EndUser> users = endUserRepository.findAll();
+        List<User> users = userRepository.findAll();
 
-//        for(EndUser user: users) {
-//            System.out.println(user.getUsername());
-//        }
+        for(User user: users) {
+            System.out.println(user.getName());
+        }
 
+//        GenericResponse.builder()
+//                .data(users)
+//                .build();
 
-        return users;
+//        Response.builder()
+//                .rc("100")
+//                .build();
+
+        Response response = new Response();
+        response .setRc("000");
+        response.setMessage("Success");
+        response.setData(users);
+        return response;
+
     }
 
 }
