@@ -12,7 +12,7 @@ public interface UserService {
     public void generateDummyDataEndUser(int amount);
 
     public void generateDummyDataPropertyOwner();
-    public Response getUsers();
+    public GenericResponse getUsers();
 
 
 }
