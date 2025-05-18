@@ -71,18 +71,25 @@ public class UserServiceImpl implements UserService {
             List<UserListResponseDTO> dtos = new ArrayList<>();
 
             for(User user: users) {
-                UserListResponseDTO dto = new UserListResponseDTO();
+//                UserListResponseDTO dto = new UserListResponseDTO();
                 EndUser endUser = (EndUser) user;
-                dto.setName(user.getName());
-                dto.setEmail(user.getEmail());
-                dto.setPhoneNumber(endUser.getPhoneNumber());
-                dto.setProfilePicture(endUser.getProfilePicture());
-                dtos.add(dto);
+                dtos.add(UserListResponseDTO.builder()
+                                .name(endUser.getName())
+                                .email(endUser.getEmail())
+                                .phoneNumber(endUser.getPhoneNumber())
+                                .profilePicture(endUser.getProfilePicture())
+                        .build());
+//                dto.setName(user.getName());
+//                dto.setEmail(user.getEmail());
+//                dto.setPhoneNumber(endUser.getPhoneNumber());
+//                dto.setProfilePicture(endUser.getProfilePicture());
+//                dtos.add(dto);
             }
 
             return GenericResponse.builder()
+                    .success(true)
+                    .message("Request list of users is successful")
                     .code(200)
-                    .message("Success")
                     .data(dtos)
                     .build();
         } catch (Exception e) {

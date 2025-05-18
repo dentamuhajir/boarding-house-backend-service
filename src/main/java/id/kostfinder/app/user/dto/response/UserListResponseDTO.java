@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 
+@Builder
 @Data
 public class UserListResponseDTO {
     private String name;
