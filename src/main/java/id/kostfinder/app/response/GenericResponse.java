@@ -6,8 +6,8 @@ import lombok.Data;
 @Builder
 @Data
 public class GenericResponse<T> {
-    private String status;
-    private Number code;
+    private int code;
+    private boolean success;
     private String message;
     private T data;
 }
