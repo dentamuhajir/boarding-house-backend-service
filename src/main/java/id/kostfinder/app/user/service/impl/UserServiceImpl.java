@@ -3,21 +3,19 @@ package id.kostfinder.app.user.service.impl;
 import com.github.javafaker.Faker;
 import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.response.GenericResponse;
-import id.kostfinder.app.response.Response;
+import id.kostfinder.app.user.dto.response.UserListResponseDTO;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.model.User;
-import id.kostfinder.app.user.repository.AdminRepository;
 import id.kostfinder.app.user.repository.EndUserRepository;
-import id.kostfinder.app.user.repository.PropertyOwnerRepository;
 import id.kostfinder.app.user.repository.UserRepository;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -67,13 +65,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public GenericResponse getUsers() {
 
-        userRepository = null;
+        //userRepository = null; // simulate to hit throw
         try {
             List<User> users = userRepository.findAll();
+            List<UserListResponseDTO> dtos = new ArrayList<>();
+
+            for(User user: users) {
+                UserListResponseDTO dto = new UserListResponseDTO();
+                dto.setName(user.getName());
+                dto.setEmail(user.getEmail());
+                dtos.add(dto);
+            }
+
             return GenericResponse.builder()
                     .code(200)
                     .message("Success")
-                    .data(users)
+                    .data(dtos)
                     .build();
         } catch (Exception e) {
             throw new GeneralException(500, e.getMessage());
