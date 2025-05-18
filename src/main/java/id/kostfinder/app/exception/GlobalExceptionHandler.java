@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GenericResponse> handleGeneralException(GeneralException ex) {
         GenericResponse response = GenericResponse.builder()
                 .code(ex.getCode())
-                .status("ERROR")
+                .success(false)
                 .message(ex.getMessage())
                 .build();
 
@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GenericResponse> handleGlobalException(Exception ex) {
         GenericResponse response = GenericResponse.builder()
                 .code(500)
-                .status("ERROR")
+                .success(false)
                 .message("An unexpected error occurred: " + ex.getMessage())
                 .build();
 
