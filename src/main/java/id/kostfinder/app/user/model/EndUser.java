@@ -11,8 +11,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Setter
-@Getter
+@Data
 @DiscriminatorValue("END_USER")
 public class EndUser extends User {
     private String username;

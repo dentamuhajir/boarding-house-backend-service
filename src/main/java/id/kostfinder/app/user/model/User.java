@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
-@Getter
+@Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {
