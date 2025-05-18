@@ -72,8 +72,11 @@ public class UserServiceImpl implements UserService {
 
             for(User user: users) {
                 UserListResponseDTO dto = new UserListResponseDTO();
+                EndUser endUser = (EndUser) user;
                 dto.setName(user.getName());
                 dto.setEmail(user.getEmail());
+                dto.setPhoneNumber(endUser.getPhoneNumber());
+                dto.setProfilePicture(endUser.getProfilePicture());
                 dtos.add(dto);
             }
 
