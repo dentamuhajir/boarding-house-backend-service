@@ -17,11 +17,6 @@ public class TestController {
     ResponseEntity<String> ping() {
         return ResponseEntity.ok("All is well");
     }
-    @GetMapping("/test-user-service")
-    ResponseEntity<?> testUserService() {
-        String result = userService.testUserService();
-        return ResponseEntity.ok(result);
-    }
 
     @GetMapping("/test/generate/user")
     ResponseEntity<?> testGenerateUser() {

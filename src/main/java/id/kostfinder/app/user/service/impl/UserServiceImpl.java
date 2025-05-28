@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
 //                UserListResponseDTO dto = new UserListResponseDTO();
                 EndUser endUser = (EndUser) user;
                 dtos.add(UserListResponseDTO.builder()
+                                .id(endUser.getId())
                                 .name(endUser.getName())
                                 .email(endUser.getEmail())
                                 .phoneNumber(endUser.getPhoneNumber())
