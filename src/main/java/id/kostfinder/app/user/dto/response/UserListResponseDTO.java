@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 @Data
 public class UserListResponseDTO {
+    private Long id;
     private String name;
     private String email;
     private String profilePicture;
