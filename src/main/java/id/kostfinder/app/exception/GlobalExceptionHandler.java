@@ -3,6 +3,8 @@ package id.kostfinder.app.exception;
 import id.kostfinder.app.response.GenericResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -28,5 +30,25 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<GenericResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        StringBuilder errorMessage = new StringBuilder("Validation failed: ");
+
+        for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+            errorMessage.append(fieldError.getField())
+                    .append(" - ")
+                    .append(fieldError.getDefaultMessage())
+                    .append("; ");
+        }
+
+        GenericResponse response = GenericResponse.builder()
+                .code(400)
+                .success(false)
+                .message(errorMessage.toString())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
