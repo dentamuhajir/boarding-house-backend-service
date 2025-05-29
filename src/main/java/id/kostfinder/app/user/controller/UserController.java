@@ -2,13 +2,12 @@ package id.kostfinder.app.user.controller;
 
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.response.Response;
+import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
 import id.kostfinder.app.user.model.User;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +28,12 @@ public class UserController {
     ResponseEntity<?> getUsers() {
         GenericResponse users = userService.getUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @PostMapping(value = "/users")
+    ResponseEntity<?> createEndUser(@RequestBody CreateEndUserRequestDTO request) {
+        GenericResponse resp = userService.createEndUser(request);
+        return  ResponseEntity.ok(resp.getMessage());
     }
 
 
