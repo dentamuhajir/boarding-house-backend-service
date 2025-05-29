@@ -3,6 +3,7 @@ package id.kostfinder.app.user.service.impl;
 import com.github.javafaker.Faker;
 import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.response.GenericResponse;
+import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
 import id.kostfinder.app.user.dto.response.UserListResponseDTO;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.model.User;
@@ -108,6 +109,31 @@ public class UserServiceImpl implements UserService {
 //        response.setData(users);
 
 
+    }
+
+    public GenericResponse createEndUser(CreateEndUserRequestDTO dto) {
+
+        try {
+            EndUser endUser = new EndUser();
+            endUser.setName(dto.getName());
+            endUser.setEmail(dto.getEmail());
+            endUser.setPassword(dto.getPassword());
+            endUser.setPhoneNumber(dto.getPhoneNumber());
+            endUser.setGender(dto.getGender());
+            endUser.setUsername(dto.getUsername());
+            endUser.setProfilePicture(dto.getProfilePicture());
+            endUser.setOccupation(dto.getOccupation());
+            endUser.setDateOfBirth(dto.getDateOfBirth());
+            System.out.println(endUser);
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+
+        return GenericResponse.builder()
+                .success(true)
+                .message("Successfully created End User")
+                .code(200)
+                .build();
     }
 
 }
