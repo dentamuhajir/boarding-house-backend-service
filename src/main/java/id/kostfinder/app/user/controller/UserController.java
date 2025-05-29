@@ -5,6 +5,7 @@ import id.kostfinder.app.response.Response;
 import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
 import id.kostfinder.app.user.model.User;
 import id.kostfinder.app.user.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/users")
-    ResponseEntity<?> createEndUser(@RequestBody CreateEndUserRequestDTO request) {
+    ResponseEntity<?> createEndUser(@Valid @RequestBody CreateEndUserRequestDTO request) {
         GenericResponse resp = userService.createEndUser(request);
         return  ResponseEntity.ok(resp.getMessage());
     }
