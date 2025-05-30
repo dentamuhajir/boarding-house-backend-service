@@ -31,6 +31,12 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping(value = "/users/total")
+    ResponseEntity<?> getTotalUsers() {
+        GenericResponse totalUsers = userService.getTotalUsers();
+        return ResponseEntity.ok(totalUsers);
+    }
+
     @PostMapping(value = "/users")
     ResponseEntity<?> createEndUser(@Valid @RequestBody CreateEndUserRequestDTO request) {
         GenericResponse resp = userService.createEndUser(request);
@@ -39,7 +45,7 @@ public class UserController {
 
     @GetMapping(value = "/users/{id}")
     ResponseEntity<?> getUser(@PathVariable Long id) {
-        GenericResponse user = userService.getUser(id);
+        GenericResponse user = userService.getTotalUsers();
         return ResponseEntity.ok(user);
     }
 

@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
-import id.kostfinder.app.user.dto.response.UserDetailResponseDTO;
 import id.kostfinder.app.user.dto.response.UserListResponseDTO;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.model.User;
@@ -109,37 +108,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public GenericResponse getUser(Long id) {
-        UserDetailResponseDTO userDetail;
-        try {
-            User user = userRepository.findById(id).orElseThrow(() -> new GeneralException(404, "User not found"));
-            EndUser endUser = (EndUser) user;
-
-            userDetail = UserDetailResponseDTO.builder()
-                    .username(endUser.getUsername())
-                    .dateOfBirth(endUser.getDateOfBirth())
-                    .gender(endUser.getGender())
-                    .occupation(endUser.getOccupation())
-                    .name(endUser.getName())
-                    .username(endUser.getUsername())
-                    .phoneNumber(endUser.getPhoneNumber())
-                    .email(endUser.getEmail())
-                    .password(endUser.getPassword())
-                    .profilePicture(endUser.getProfilePicture())
-                    .build();
-        } catch (Exception e) {
-            throw new GeneralException(500, e.getMessage());
-        }
-
-        return GenericResponse.builder()
-                .code(200)
-                .success(true)
-                .data(userDetail)
-                .build();
-    }
-
-
     public GenericResponse createEndUser(CreateEndUserRequestDTO dto) {
 
         try {
@@ -153,7 +121,7 @@ public class UserServiceImpl implements UserService {
             endUser.setProfilePicture(dto.getProfilePicture());
             endUser.setOccupation(dto.getOccupation());
             endUser.setDateOfBirth(dto.getDateOfBirth());
-            endUserRepository.save(endUser);
+            System.out.println(endUser);
         } catch (Exception e) {
             throw new GeneralException(500, e.getMessage());
         }
@@ -178,5 +146,24 @@ public class UserServiceImpl implements UserService {
                 .message("The data is deleted successfully")
                 .build();
     }
+
+    public GenericResponse getTotalUsers() {
+        Long totalUsers = 0L;
+        Map<String, Long> result = new HashMap<>();
+
+        try {
+            totalUsers = userRepository.count();
+            result.put("totalUsers", totalUsers);
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+        return GenericResponse.builder()
+                .success(true)
+                .code(200)
+                .data(result)
+                .build();
+    }
+
+
 
 }

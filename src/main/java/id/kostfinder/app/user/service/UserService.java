@@ -11,10 +11,14 @@ import java.util.List;
 public interface UserService {
 
     public void generateDummyDataEndUser(int amount);
+
     public void generateDummyDataPropertyOwner();
     public GenericResponse getUsers();
-    public GenericResponse getUser(Long id);
     public GenericResponse createEndUser(CreateEndUserRequestDTO dto);
 
     public GenericResponse deleteUser(Long id);
+
+    public GenericResponse getTotalUsers();
+
+
 }
