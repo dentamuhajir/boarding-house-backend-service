@@ -15,4 +15,6 @@ public interface UserService {
     public GenericResponse getUsers();
     public GenericResponse getUser(Long id);
     public GenericResponse createEndUser(CreateEndUserRequestDTO dto);
+
+    public GenericResponse deleteUser(Long id);
 }

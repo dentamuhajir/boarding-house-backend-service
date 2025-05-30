@@ -165,4 +165,18 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Override
+    public GenericResponse deleteUser(Long id) {
+        try {
+            userRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+        return GenericResponse.builder()
+                .success(true)
+                .code(200)
+                .message("The data is deleted successfully")
+                .build();
+    }
+
 }
