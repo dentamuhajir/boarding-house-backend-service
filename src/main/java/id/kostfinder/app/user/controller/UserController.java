@@ -37,5 +37,15 @@ public class UserController {
         return  ResponseEntity.ok(resp.getMessage());
     }
 
+    @GetMapping(value = "/users/{id}")
+    ResponseEntity<?> getUser(@PathVariable Long id) {
+        GenericResponse user = userService.getUser(id);
+        return ResponseEntity.ok(user);
+    }
 
+    @DeleteMapping(value = "/users/{id}")
+    ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        GenericResponse user = userService.deleteUser(id);
+        return ResponseEntity.ok(user);
+    }
 }
