@@ -45,7 +45,7 @@ public class UserController {
 
     @GetMapping(value = "/users/{id}")
     ResponseEntity<?> getUser(@PathVariable Long id) {
-        GenericResponse user = userService.getTotalUsers();
+        GenericResponse user = userService.getUser(id);
         return ResponseEntity.ok(user);
     }
 

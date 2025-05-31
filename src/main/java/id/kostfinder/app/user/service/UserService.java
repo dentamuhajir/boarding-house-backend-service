@@ -15,7 +15,7 @@ public interface UserService {
     public void generateDummyDataPropertyOwner();
     public GenericResponse getUsers();
     public GenericResponse createEndUser(CreateEndUserRequestDTO dto);
-
+    public GenericResponse getUser(Long id);
     public GenericResponse deleteUser(Long id);
 
     public GenericResponse getTotalUsers();
