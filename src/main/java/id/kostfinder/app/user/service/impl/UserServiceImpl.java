@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
+import id.kostfinder.app.user.dto.response.UserDetailResponseDTO;
 import id.kostfinder.app.user.dto.response.UserListResponseDTO;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.model.User;
@@ -132,6 +133,37 @@ public class UserServiceImpl implements UserService {
                 .code(200)
                 .build();
     }
+
+    @Override
+    public GenericResponse getUser(Long id) {
+        UserDetailResponseDTO userDetail;
+        try {
+            User user = userRepository.findById(id).orElseThrow(() -> new GeneralException(404, "User not found"));
+            EndUser endUser = (EndUser) user;
+
+            userDetail = UserDetailResponseDTO.builder()
+                    .username(endUser.getUsername())
+                    .dateOfBirth(endUser.getDateOfBirth())
+                    .gender(endUser.getGender())
+                    .occupation(endUser.getOccupation())
+                    .name(endUser.getName())
+                    .username(endUser.getUsername())
+                    .phoneNumber(endUser.getPhoneNumber())
+                    .email(endUser.getEmail())
+                    .password(endUser.getPassword())
+                    .profilePicture(endUser.getProfilePicture())
+                    .build();
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+
+        return GenericResponse.builder()
+                .code(200)
+                .success(true)
+                .data(userDetail)
+                .build();
+    }
+
 
     @Override
     public GenericResponse deleteUser(Long id) {
