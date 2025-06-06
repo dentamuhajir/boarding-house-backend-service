@@ -11,6 +11,7 @@ import id.kostfinder.app.user.model.User;
 import id.kostfinder.app.user.repository.EndUserRepository;
 import id.kostfinder.app.user.repository.UserRepository;
 import id.kostfinder.app.user.service.UserService;
+import jakarta.persistence.MapsId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
@@ -104,7 +105,12 @@ public class UserServiceImpl implements UserService {
                     .success(true)
                     .message("Request list of users is successful")
                     .code(200)
-                    .data(dtos)
+                    .data(Map.of(
+                            "currentPage", users.getNumber(),
+                            "totalItems", users.getTotalElements(),
+                            "totalPages", users.getTotalPages(),
+                            "users" , dtos
+                    ))
                     .build();
         } catch (Exception e) {
             throw new GeneralException(500, e.getMessage());
