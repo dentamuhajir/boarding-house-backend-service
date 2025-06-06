@@ -7,6 +7,9 @@ import id.kostfinder.app.user.model.User;
 import id.kostfinder.app.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +29,15 @@ public class UserController {
     }
 
     @GetMapping(value = "/users")
-    ResponseEntity<?> getUsers() {
-        GenericResponse users = userService.getUsers();
+    // localhost:8081/users?page=0&size=10&sort=id,desc
+    ResponseEntity<?> getUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id,asc") String[] sort
+    ) {
+        Sort sorting =Sort.by(Sort.Direction.fromString(sort[1]), sort[0]); // sort[0] = id, sort[1 = asc/desc
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        GenericResponse users = userService.getUsers(pageable);
         return ResponseEntity.ok(users);
     }
 

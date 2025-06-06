@@ -12,6 +12,9 @@ import id.kostfinder.app.user.repository.EndUserRepository;
 import id.kostfinder.app.user.repository.UserRepository;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -63,11 +66,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GenericResponse getUsers() {
+    public GenericResponse getUsers(Pageable pageable) {
 
         //userRepository = null; // simulate to hit throw
         try {
-            List<User> users = userRepository.findAll();
+            Page<User> users = userRepository.findAll(pageable);
             //List<UserListResponseDTO> dtos = new ArrayList<>();
             List<UserListResponseDTO> dtos = users.stream().map(user -> {
                 EndUser endUser = (EndUser) user;
