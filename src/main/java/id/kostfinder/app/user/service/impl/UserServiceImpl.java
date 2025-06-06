@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
             endUser.setPhoneNumber(faker.phoneNumber().cellPhone());
             endUser.setDateOfBirth(localBirthday);
             endUser.setOccupation(faker.job().title());
+            endUser.setDeleted(false);
             endUserRepository.save(endUser);
         }
     }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "user")
+@Where(clause = "deleted = false")
 @Data
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
