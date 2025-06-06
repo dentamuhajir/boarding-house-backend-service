@@ -164,12 +164,15 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-
     @Override
     public GenericResponse deleteUser(Long id) {
         try {
-            userRepository.deleteById(id);
+            int affected = userRepository.softDeleteById(id);
+            if(affected == 0) {
+                throw new GeneralException(404, "User not found or already deleted");
+            }
         } catch (Exception e) {
+            System.out.println("lock here");
             throw new GeneralException(500, e.getMessage());
         }
         return GenericResponse.builder()
