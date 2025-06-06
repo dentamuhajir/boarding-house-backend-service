@@ -8,8 +8,6 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "user")
 @Data
-@SQLDelete(sql = "Update users SET deleted = true WHERE id = ?")
-@Where(clause = "deleted=false")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 public abstract class User {
