@@ -15,6 +15,7 @@ public class SecurityConfig {
                 .csrf().disable() // In REST we are no need csrf
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/register", "/api/login").permitAll() // by default if we activated spring security that means all enpoint is protected so w permitted login and register
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin().disable(); // We use REST not FORM so we disabled it
