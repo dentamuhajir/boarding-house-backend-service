@@ -1,5 +1,6 @@
 package id.kostfinder.app.security;
 
+import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,10 +32,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
+    public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userService.findByUsername(username);
+            // So User Facade already use by UserDetailService
+            EndUser user = (EndUser) userService.findByUsername(username); // Cast to EndUser
             if (user == null) throw new UsernameNotFoundException("User not found");
+
             return User.withUsername(user.getUsername())
                     .password(user.getPassword())
                     .roles("USER")
