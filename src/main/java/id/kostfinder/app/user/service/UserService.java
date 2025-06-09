@@ -13,6 +13,7 @@ public interface UserService {
 
     public void generateDummyDataEndUser(int amount);
 
+    public User findByUsername(String username);
     public void generateDummyDataPropertyOwner();
     public GenericResponse getUsers(Pageable pageable);
     public GenericResponse createEndUser(CreateEndUserRequestDTO dto);
