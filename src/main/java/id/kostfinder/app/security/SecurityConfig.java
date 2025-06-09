@@ -1,14 +1,21 @@
 package id.kostfinder.app.security;
 
+import id.kostfinder.app.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+    @Autowired
+    UserService userService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -21,6 +28,18 @@ public class SecurityConfig {
                 .formLogin().disable(); // We use REST not FORM so we disabled it
 
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserService userService) {
+        return username -> {
+            User user = userService.findByUsername(username);
+            if (user == null) throw new UsernameNotFoundException("User not found");
+            return User.withUsername(user.getUsername())
+                    .password(user.getPassword())
+                    .roles("USER")
+                    .build();
+        };
     }
 
 }
