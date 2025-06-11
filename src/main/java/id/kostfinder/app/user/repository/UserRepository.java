@@ -13,6 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Transactional // If you no add it will produce error 500 "Executing an update/delete query;"
     @Query("UPDATE User u SET u.deleted = true WHERE u. id = :id AND u.deleted = false") // Refer to entity User not table user
     int softDeleteById(@Param("id") Long id); // why return is int because if you operation to update or modifying the return int is indicated of the row affected
-
-    public User findByUsername(String username);
+    public User findByEmail(String email);
 }

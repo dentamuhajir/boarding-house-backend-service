@@ -33,12 +33,12 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
+        return email -> {
             // So User Facade already use by UserDetailService
-            EndUser user = (EndUser) userService.findByUsername(username); // Cast to EndUser
-            if (user == null) throw new UsernameNotFoundException("User not found");
+            id.kostfinder.app.user.model.User user = userService.findByEmail(email); // Cast to EndUser
+            if (user == null) throw new UsernameNotFoundException("Email not found");
 
-            return User.withUsername(user.getUsername())
+            return User.withUsername(user.getEmail()) // withUsername is a static factory method provided by Spring Security’s
                     .password(user.getPassword())
                     .roles("USER")
                     .build();
