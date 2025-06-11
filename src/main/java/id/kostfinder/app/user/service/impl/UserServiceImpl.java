@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
     private EndUserRepository endUserRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void generateDummyDataEndUser(int amount) {
@@ -48,7 +51,7 @@ public class UserServiceImpl implements UserService {
 
             endUser.setName(name);
             endUser.setEmail(firstName.toLowerCase() + lastName.toLowerCase() + "@gmail.com");
-            endUser.setPassword(faker.internet().password());
+            endUser.setPassword(passwordEncoder.encode("zxvasvasfqwfqwr12"));
             //endUser.setProfilePicture("https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/50/50");
             endUser.setProfilePicture("https://i.pravatar.cc/50?img=" + faker.number().numberBetween(1,70));
             endUser.setGender(gender[randomIndex]);
