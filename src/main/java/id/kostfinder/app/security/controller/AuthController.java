@@ -90,4 +90,29 @@ public class AuthController {
         }
 
     }
+
+    // Endpoint untuk proses logout
+    @PostMapping("/logout")
+    public ResponseEntity<GenericResponse> logout(HttpServletRequest request) {
+        System.out.println("Hit there");
+        // Mendapatkan sesi HTTP yang ada
+        HttpSession session = request.getSession(false); // false agar tidak membuat sesi baru jika tidak ada
+
+        if (session != null) {
+            session.invalidate(); // Invalidasi (hapus) sesi
+        }
+
+        // Hapus Authentication dari SecurityContextHolder
+        SecurityContextHolder.clearContext();
+
+        return ResponseEntity.ok(
+                GenericResponse.builder()
+                        .success(true)
+                        .message("Logout berhasil!")
+                        .code(200)
+                        .build()
+        );
+    }
+
+
 }
