@@ -54,3 +54,7 @@ Is it possible to change your code from session-based to JWT?
             – Set user in SecurityContext | 🔴 Medium to hard (but standard) |
         5.  Update your SecurityFilterChain to include your JWT filter | 🟢 Easy |
         6.  (Optional) Implement token expiration, refresh, and blacklist | 🔴 Advanced, can be done later |
+
+
+Setup to develop
+        - Add Libarary JWT Token into POM
