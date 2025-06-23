@@ -30,3 +30,27 @@ Use JWT or Session based
     - You prefer server-side session management.
     - You want automatic CSRF protection via cookies.
     - Scalability is not a major concern or you use sticky sessions/Redis.
+
+Is it possible to change your code from session-based to JWT?
+    ✅ Yes, it is absolutely possible.
+    - Your current setup is already halfway there:
+    - You’ve disabled CSRF.
+    - You’ve disabled form login.
+    - You’ve defined a custom UserDetailsService and AuthenticationManager, which are needed for JWT-based login.
+    - You're using Spring Security 6+ style (with SecurityFilterChain), which works well with JWT setup.
+    🔍 How complex is the change to JWT?
+    - It's moderately complex if you're new to Spring Security or JWT, but not overwhelming. Here's a breakdown:
+
+    🔧 What you need to do to switch to JWT (Step-by-step)
+        Step	What to Do	Complexity
+        1.	Change session management to stateless:
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            (Remove maximumSessions, etc.) | 🟢 Easy |
+        2.  Create a JWT utility class to generate and validate tokens | 🟡 Moderate |
+        3.  Create a login controller: manually authenticate and return JWT | 🟡 Moderate |
+        4.  Create a JwtAuthenticationFilter (extends OncePerRequestFilter) to:
+            – Read Authorization header
+            – Validate token
+            – Set user in SecurityContext | 🔴 Medium to hard (but standard) |
+        5.  Update your SecurityFilterChain to include your JWT filter | 🟢 Easy |
+        6.  (Optional) Implement token expiration, refresh, and blacklist | 🔴 Advanced, can be done later |
