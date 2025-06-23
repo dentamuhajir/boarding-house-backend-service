@@ -15,3 +15,18 @@ AutoReload
 
 Problem Lombok
     https://www.youtube.com/watch?v=poTDoN7JGCo
+
+Use JWT or Session based
+
+    ✅ Use JWT when:
+    - You're building a REST API.
+    - The frontend is separate (React, mobile app, etc.).
+    - You need stateless and scalable authentication.
+    - The frontend and backend are on different domains.
+    - You want to send tokens via Authorization headers.
+    ✅ Use Session when:
+    - You're building a traditional web app (e.g., Thymeleaf, JSP).
+    - The frontend and backend are on the same domain.
+    - You prefer server-side session management.
+    - You want automatic CSRF protection via cookies.
+    - Scalability is not a major concern or you use sticky sessions/Redis.
