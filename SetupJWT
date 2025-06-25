@@ -1,0 +1,7 @@
+✅ User login → dapat token
+
+✅ Token dikirim lewat Authorization: Bearer <token>
+
+✅ Filter akan membaca, validasi, dan inject user ke Spring Security
+
+✅ Endpoint yang protected (.authenticated()) akan mengenali user dari token
