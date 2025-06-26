@@ -1,5 +1,6 @@
 package id.kostfinder.app.security;
 
+import id.kostfinder.app.security.jwt.JwtAuthenticationFilter;
 import id.kostfinder.app.user.model.EndUser;
 import id.kostfinder.app.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,28 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     UserService userService;
+    @Autowired
+    JwtAuthenticationFilter jwtAuthenticationFilter; // 🛡️ Filter custom untuk baca token
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // In REST we are no need csrf
+                .csrf().disable() // Untuk REST API, tidak butuh CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/login").permitAll() // by default if we activated spring security that means all enpoint is protected so w permitted login and register
-                        //.requestMatchers("/**").permitAll()
-                        //.requestMatchers("/api/users/**").authenticated() // to prevent endpoint endpoint detail/list user
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/register", "/api/login", "/api/refresh").permitAll() // 🆓 Bebas akses
+                        .anyRequest().authenticated() // 🔐 Endpoint lain harus pakai token
                 )
-                // Configuration session management.
-                // STATELESS biasanya digunakan untuk JWT. Untuk sesi tradisional, bisa REMEMBER_ME, IF_REQUIRED, atau ALWAYS.
-                // DEFAULT-nya adalah IF_REQUIRED, yang cocok untuk sesi.
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Session akan dibuat jika diperlukan
-                        .maximumSessions(1) // Membatasi satu sesi per pengguna
-                        .maxSessionsPreventsLogin(false) // Jika batas tercapai, pengguna lama akan di-logout
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // ❌ Tidak pakai session
                 )
-                .formLogin().disable(); // We use REST not FORM so we disabled it
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 🔁 Tambahkan filter JWT
+                .formLogin().disable(); // 🔒 Disable form login
 
         return http.build();
     }
