@@ -18,11 +18,20 @@ import java.io.IOException;
 @Component // Menandakan bahwa kelas ini akan dikelola oleh Spring (bisa digunakan otomatis di konfigurasi keamanan)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtil jwtUtil; // Util class untuk memproses token: generate, verifikasi, ekstrak email
+    private final JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private UserDetailsService userDetailsService; // Digunakan untuk load user berdasarkan email dari token
+    // ✅ Constructor injection (Dagger-style)
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
+
+//    @Autowired
+//    private JwtUtil jwtUtil; // Util class untuk memproses token: generate, verifikasi, ekstrak email
+//
+//    @Autowired
+//    private UserDetailsService userDetailsService; // Digunakan untuk load user berdasarkan email dari token
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
