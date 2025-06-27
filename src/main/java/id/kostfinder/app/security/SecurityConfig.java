@@ -41,9 +41,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .csrf().disable() // Untuk REST API, tidak butuh CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/login", "/api/refresh").permitAll() // 🆓 Bebas akses
+                        .requestMatchers("/api/register", "/api/login", "/api/refresh", "users/*").permitAll() // 🆓 Bebas akses
                         .anyRequest().authenticated() // 🔐 Endpoint lain harus pakai token
                 )
                 .sessionManagement(session -> session
