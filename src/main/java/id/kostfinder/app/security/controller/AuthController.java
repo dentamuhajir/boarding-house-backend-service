@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,12 +33,22 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequestDTO loginRequest) {
+
         try {
             var authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
             authenticationManager.authenticate(authToken);
 
             String jwt = jwtUtil.generateToken(loginRequest.getEmail());
 
+            ResponseCookie cookie = ResponseCookie.from("token", jwt)
+                    .httpOnly(true)
+                    .path("/")
+                    .maxAge(3600)
+                    .secure(false) // true in prod
+                    .sameSite("Lax")
+                    .build();
+
+            System.out.println(jwt);
             Map<String, Object> response = new HashMap<>();
             response.put("token", jwt);
             response.put("message", "Login berhasil");
