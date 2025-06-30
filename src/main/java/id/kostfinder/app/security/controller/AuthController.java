@@ -3,11 +3,13 @@ package id.kostfinder.app.security.controller;
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.security.dto.request.LoginRequestDTO;
 import id.kostfinder.app.security.jwt.JwtUtil;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -56,6 +58,20 @@ public class AuthController {
         } catch (AuthenticationException e) {
             throw new RuntimeException("Email atau password salah");
         }
+    }
+
+    @GetMapping("/check-jwt")
+    public ResponseEntity<?> checkJwtFromCookie(HttpServletRequest request) {
+        System.out.println("hit ");
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("access_token".equals(cookie.getName())) {
+                    String token = cookie.getValue();
+                    return ResponseEntity.ok("JWT found: " + token);
+                }
+            }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT not found in cookies");
     }
 
 //    @PostMapping("/login")
