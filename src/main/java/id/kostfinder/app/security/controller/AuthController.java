@@ -2,21 +2,18 @@ package id.kostfinder.app.security.controller;
 
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.security.dto.request.LoginRequestDTO;
-import id.kostfinder.app.security.dto.response.AuthResponseDTO;
 import id.kostfinder.app.security.jwt.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -32,7 +29,7 @@ public class AuthController {
     JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody LoginRequestDTO loginRequest) {
+    public Map<String, Object> login(@RequestBody LoginRequestDTO loginRequest, HttpServletResponse responseHttp) {
 
         try {
             var authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
@@ -47,6 +44,9 @@ public class AuthController {
                     .secure(false) // true in prod
                     .sameSite("Lax")
                     .build();
+
+            // Tambahkan cookie ke header HTTP response
+            responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
             System.out.println(jwt);
             Map<String, Object> response = new HashMap<>();
