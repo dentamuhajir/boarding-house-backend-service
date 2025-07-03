@@ -45,7 +45,13 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable() // Untuk REST API, tidak butuh CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/register", "/api/login", "/api/refresh", "/api/check-jwt").permitAll() // 🆓 Bebas akses
+                        .requestMatchers(
+                                "/api/register",
+                                "/api/login",
+                                "/api/refresh",
+                                "/api/check-jwt",
+                                "/users/generated/end-user"
+                        ).permitAll() // 🆓 Bebas akses
                         .anyRequest().authenticated() // 🔐 Endpoint lain harus pakai token
                 )
                 .sessionManagement(session -> session
