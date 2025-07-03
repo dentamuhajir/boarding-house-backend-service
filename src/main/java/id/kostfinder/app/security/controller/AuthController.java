@@ -32,25 +32,24 @@ public class AuthController {
 
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody LoginRequestDTO loginRequest, HttpServletResponse responseHttp) {
-
         try {
             var authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
             authenticationManager.authenticate(authToken);
 
             String jwt = jwtUtil.generateToken(loginRequest.getEmail());
 
-            ResponseCookie cookie = ResponseCookie.from("token", jwt)
-                    .httpOnly(true)
-                    .path("/")
-                    .maxAge(3600)
-                    .secure(false) // true in prod
-                    .sameSite("Lax")
-                    .build();
+//            ResponseCookie cookie = ResponseCookie.from("token", jwt)
+//                    .httpOnly(true)
+//                    .path("/")
+//                    .maxAge(3600)
+//                    .secure(false) // true in prod
+//                    .sameSite("Lax")
+//                    .build();
 
             // Tambahkan cookie ke header HTTP response
-            responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+            // responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-            System.out.println(jwt);
+            //System.out.println(jwt);
             Map<String, Object> response = new HashMap<>();
             response.put("token", jwt);
             response.put("message", "Login berhasil");
@@ -63,9 +62,15 @@ public class AuthController {
     @GetMapping("/check-jwt")
     public ResponseEntity<?> checkJwtFromCookie(HttpServletRequest request) {
         System.out.println("hit ");
+//
+//        System.out.println(request.getCookies());
+//        System.out.println("pass");
         if (request.getCookies() != null) {
+            System.out.println("pass in loop");
             for (Cookie cookie : request.getCookies()) {
-                if ("access_token".equals(cookie.getName())) {
+                System.out.println(cookie.getName());
+                System.out.println(cookie.getValue());
+                if ("token".equals(cookie.getName())) {
                     String token = cookie.getValue();
                     return ResponseEntity.ok("JWT found: " + token);
                 }
