@@ -17,6 +17,7 @@ public class CorsConfig {
         config.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // allow Next.js dev
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
