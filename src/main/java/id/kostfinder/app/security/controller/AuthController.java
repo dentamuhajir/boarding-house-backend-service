@@ -3,6 +3,7 @@ package id.kostfinder.app.security.controller;
 import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.security.dto.request.LoginRequestDTO;
 import id.kostfinder.app.security.jwt.JwtUtil;
+import id.kostfinder.app.security.service.AuthService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,37 +27,15 @@ import java.util.Map;
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     JwtUtil jwtUtil;
+    @Autowired
+    AuthService authService;
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody LoginRequestDTO loginRequest, HttpServletResponse responseHttp) {
-        try {
-            var authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
-            authenticationManager.authenticate(authToken);
-
-            String jwt = jwtUtil.generateToken(loginRequest.getEmail());
-
-//            ResponseCookie cookie = ResponseCookie.from("token", jwt)
-//                    .httpOnly(true)
-//                    .path("/")
-//                    .maxAge(3600)
-//                    .secure(false) // true in prod
-//                    .sameSite("Lax")
-//                    .build();
-
-            // Tambahkan cookie ke header HTTP response
-            // responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-            //System.out.println(jwt);
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", jwt);
-            response.put("message", "Login berhasil");
-            return response;
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Email atau password salah");
-        }
+    public ResponseEntity login(@RequestBody LoginRequestDTO loginRequest, HttpServletResponse responseHttp) {
+        GenericResponse response = authService.login(loginRequest);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/check-jwt")
