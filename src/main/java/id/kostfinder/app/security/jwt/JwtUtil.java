@@ -4,6 +4,7 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -12,9 +13,10 @@ import java.util.Date;
 @Component
 public class JwtUtil {
     // minimal 32 bytes atau 32 karakter
-    private final String SECRET = "Zcbsdbsdgwegwet23Zcbsdbsdgwegwet23"; // idealnya diambil dari environment variable,
-
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 24; // 1 hari
+    @Value("${jwt.secret}")
+    private String SECRET; // idealnya diambil dari environment variable,
+    //@Value("${jwt.expired}")
+    private long EXPIRATION_TIME = 1000 * 60 * 5;
 
 //    // Mengambil secret key dari application.properties
 //    @Value("${jwt.secret}")
