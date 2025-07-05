@@ -19,6 +19,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +35,29 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginRequestDTO loginRequest, HttpServletResponse responseHttp) {
-        GenericResponse response = authService.login(loginRequest);
-        return ResponseEntity.ok(response);
+        String jwt = authService.login(loginRequest);
+
+        // Buat cookie
+        ResponseCookie cookie = ResponseCookie.from("token", jwt)
+                .httpOnly(true)
+                .path("/")
+                .maxAge(Duration.ofHours(1))
+                .secure(false) // true di production
+                .sameSite("Lax")
+                .build();
+
+        // Set header Set-Cookie
+        responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        // Return response body
+        GenericResponse body = GenericResponse.builder()
+                .code(200)
+                .success(true)
+                .message("Login successful")
+                .data(Map.of("token", jwt)) // opsional, bisa dihapus kalau hanya pakai cookie
+                .build();
+
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("/check-jwt")

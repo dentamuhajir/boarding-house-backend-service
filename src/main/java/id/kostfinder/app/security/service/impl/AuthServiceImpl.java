@@ -21,35 +21,14 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     JwtUtil jwtUtil;
     @Override
-    public GenericResponse login(LoginRequestDTO loginRequest) {
+    public String login(LoginRequestDTO loginRequest) {
         try {
             var authToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
             authenticationManager.authenticate(authToken);
 
             String jwt = jwtUtil.generateToken(loginRequest.getEmail());
 
-//            ResponseCookie cookie = ResponseCookie.from("token", jwt)
-//                    .httpOnly(true)
-//                    .path("/")
-//                    .maxAge(3600)
-//                    .secure(false) // true in prod
-//                    .sameSite("Lax")
-//                    .build();
-
-            // Tambahkan cookie ke header HTTP response
-            // responseHttp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-            //System.out.println(jwt);
-
-            return GenericResponse.builder()
-                    .code(200)
-                    .success(true)
-                    .message("Login successfull")
-                    .data( Map.of(
-                            "token", jwt
-                    ))
-                    .build();
-
+            return jwt;
         } catch (AuthenticationException e) {
             throw new RuntimeException("Email atau password salah");
         }
