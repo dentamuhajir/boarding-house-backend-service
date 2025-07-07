@@ -1,6 +1,6 @@
-package id.kostfinder.app.user.repository;
+package id.kostfinder.app.features.user.repository;
 
-import id.kostfinder.app.user.model.PropertyOwner;
+import id.kostfinder.app.features.user.model.PropertyOwner;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

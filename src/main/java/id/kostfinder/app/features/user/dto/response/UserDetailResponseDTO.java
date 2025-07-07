@@ -1,4 +1,4 @@
-package id.kostfinder.app.user.dto.response;
+package id.kostfinder.app.features.user.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package id.kostfinder.app.security.service.impl;
 
-import id.kostfinder.app.response.GenericResponse;
 import id.kostfinder.app.security.dto.request.LoginRequestDTO;
 import id.kostfinder.app.security.jwt.JwtUtil;
 import id.kostfinder.app.security.service.AuthService;
@@ -9,9 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {

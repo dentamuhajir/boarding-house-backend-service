@@ -1,10 +1,8 @@
-package id.kostfinder.app.user.controller;
+package id.kostfinder.app.features.user.controller;
 
 import id.kostfinder.app.response.GenericResponse;
-import id.kostfinder.app.response.Response;
-import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
-import id.kostfinder.app.user.model.User;
-import id.kostfinder.app.user.service.UserService;
+import id.kostfinder.app.features.user.dto.request.CreateEndUserRequestDTO;
+import id.kostfinder.app.features.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -12,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController

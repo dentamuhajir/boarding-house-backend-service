@@ -1,4 +1,4 @@
-package id.kostfinder.app.user.dto.request;
+package id.kostfinder.app.features.user.dto.request;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
