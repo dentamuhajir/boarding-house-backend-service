@@ -41,7 +41,7 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie.from("token", jwt)
                 .httpOnly(true)
                 .path("/")
-                .maxAge(Duration.ofHours(1))
+                .maxAge(Duration.ofMinutes(5)) // this is should be set same as token expire
                 .secure(false) // true di production
                 .sameSite("Lax")
                 .build();
