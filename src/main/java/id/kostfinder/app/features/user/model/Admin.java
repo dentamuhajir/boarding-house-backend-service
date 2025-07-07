@@ -1,4 +1,4 @@
-package id.kostfinder.app.user.model;
+package id.kostfinder.app.features.user.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;

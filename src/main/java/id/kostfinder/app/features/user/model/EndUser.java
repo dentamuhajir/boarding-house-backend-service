@@ -1,12 +1,10 @@
-package id.kostfinder.app.user.model;
+package id.kostfinder.app.features.user.model;
 
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 

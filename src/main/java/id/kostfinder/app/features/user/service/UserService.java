@@ -1,14 +1,9 @@
-package id.kostfinder.app.user.service;
+package id.kostfinder.app.features.user.service;
 
 import id.kostfinder.app.response.GenericResponse;
-import id.kostfinder.app.response.Response;
-import id.kostfinder.app.user.dto.request.CreateEndUserRequestDTO;
-import id.kostfinder.app.user.model.EndUser;
-import id.kostfinder.app.user.model.User;
+import id.kostfinder.app.features.user.dto.request.CreateEndUserRequestDTO;
+import id.kostfinder.app.features.user.model.User;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 public interface UserService {
 

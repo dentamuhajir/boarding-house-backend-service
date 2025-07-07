@@ -1,7 +1,7 @@
-package id.kostfinder.app.test;
+package id.kostfinder.app.features.test;
 
 
-import id.kostfinder.app.user.service.UserService;
+import id.kostfinder.app.features.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

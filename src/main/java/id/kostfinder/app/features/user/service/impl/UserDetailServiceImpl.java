@@ -1,7 +1,7 @@
-package id.kostfinder.app.user.service.impl;
+package id.kostfinder.app.features.user.service.impl;
 
-import id.kostfinder.app.user.model.User;
-import id.kostfinder.app.user.service.UserService;
+import id.kostfinder.app.features.user.model.User;
+import id.kostfinder.app.features.user.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
