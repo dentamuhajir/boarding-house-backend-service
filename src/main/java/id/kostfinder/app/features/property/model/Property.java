@@ -19,4 +19,7 @@ public class Property {
     @OneToMany(mappedBy = "property")
     private List<PropertyImage> propertyImages;
 
+    @OneToMany(mappedBy = "property")
+    private List<PropertyPrice> propertyPrices;
+
 }
