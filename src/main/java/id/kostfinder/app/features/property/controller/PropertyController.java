@@ -1,6 +1,7 @@
 package id.kostfinder.app.features.property.controller;
 
 import id.kostfinder.app.features.property.service.PropertyService;
+import id.kostfinder.app.response.GenericResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,5 +16,10 @@ public class PropertyController {
     ResponseEntity<?> seedProperty() {
         propertyService.seedProperty();
         return ResponseEntity.ok("Success");
+    }
+    @GetMapping(value = "property")
+    ResponseEntity<?> getProperties() {
+        GenericResponse response = propertyService.getProperties();
+        return ResponseEntity.ok(response);
     }
 }
