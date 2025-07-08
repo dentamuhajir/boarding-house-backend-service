@@ -60,4 +60,16 @@ public class PropertyServiceImpl implements PropertyService {
         }
         return null;
     }
+
+    @Override
+    public GenericResponse getProperties() {
+
+        List<Property> property = propertyRepository.findAll();
+        return GenericResponse.builder()
+                .code(200)
+                .success(true)
+                .message("Get a list of property")
+                .data(property)
+                .build();
+    }
 }

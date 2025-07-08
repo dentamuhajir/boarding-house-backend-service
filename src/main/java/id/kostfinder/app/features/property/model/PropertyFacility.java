@@ -1,5 +1,6 @@
 package id.kostfinder.app.features.property.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,5 +13,6 @@ public class PropertyFacility {
     private String name;
     @ManyToOne
     @JoinColumn(name = "property_id")
+    @JsonIgnore
     private Property property;
 }
