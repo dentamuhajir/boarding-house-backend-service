@@ -16,8 +16,11 @@ public class Property {
 
     private String name;
     private String description;
-    private String facility;
     private String address;
+    private String photo;
+
+    @OneToMany(mappedBy = "property")
+    private List<PropertyFacility> propertyFacilities;
 
     // mappedBy propwerty must refers to  private Property property; the variable defined
     @OneToMany(mappedBy = "property")

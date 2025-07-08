@@ -2,25 +2,61 @@ package id.kostfinder.app.features.property.service.impl;
 
 import com.github.javafaker.Faker;
 import id.kostfinder.app.features.property.model.Property;
+import id.kostfinder.app.features.property.model.PropertyFacility;
+import id.kostfinder.app.features.property.repository.PropertyFacilityRepository;
 import id.kostfinder.app.features.property.repository.PropertyRepository;
 import id.kostfinder.app.features.property.service.PropertyService;
 import id.kostfinder.app.response.GenericResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PropertyServiceImpl implements PropertyService {
     private PropertyRepository propertyRepository;
+    private PropertyFacilityRepository propertyFacilityRepository;
+
     public GenericResponse seedProperty(){
         Faker faker = new Faker();
+        List<String> facilities = new ArrayList<>();
+        facilities.add("AC");
+        facilities.add("Wastafel");
+        facilities.add("Desk");
+        facilities.add("Bed");
+        facilities.add("WiFi");
+        facilities.add("Shower");
+        facilities.add("Breakfast");
+        facilities.add("Window");
 
-        for(int i = 1; i < 30; i++) {
+        //List<PropertyFacility> storeFacility = new ArrayList<>();
+        for(int i = 1; i <= 10; i++) {
+            System.out.println("hit there");
             Property property = new Property();
-            property.setName("Kost " + faker.address().streetName());
+
+            Collections.shuffle(facilities);
+
+            property.setName("Kost " + faker.address().cityName());
             property.setAddress("Jl " + faker.address().streetAddress());
             property.setDescription(faker.lorem().sentence());
+            property.setPhoto("https://picsum.photos/seed/" + faker.number().numberBetween(1, 1001) + "/600/400");
             propertyRepository.save(property);
+
+            int randomTotalFacility = faker.number().numberBetween(1, facilities.size());
+            for(int j = 0; j < randomTotalFacility; j++) {
+                // shuffle the list data of facilities
+
+                PropertyFacility propertyFacility = new PropertyFacility();
+                // add value to propertyFacility
+                propertyFacility.setName(facilities.get(j));
+                propertyFacility.setProperty(property);
+                //storeFacility.add(propertyFacility);
+                propertyFacilityRepository.save(propertyFacility);
+            }
         }
         return null;
     }
