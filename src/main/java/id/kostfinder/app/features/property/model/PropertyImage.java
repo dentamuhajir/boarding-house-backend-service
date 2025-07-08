@@ -11,9 +11,15 @@ public class PropertyImage {
     private String name;
     @Column(name = "image_url")
     private String imageUrl;
-
+    @Enumerated(EnumType.STRING)
+    private ImageType type;
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
 
+}
+
+enum ImageType {
+    MAIN,
+    GALLERY
 }
