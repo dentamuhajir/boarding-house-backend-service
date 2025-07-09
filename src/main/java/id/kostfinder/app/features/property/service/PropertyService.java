@@ -5,4 +5,5 @@ import id.kostfinder.app.response.GenericResponse;
 public interface PropertyService {
     public GenericResponse seedProperty();
     public GenericResponse getProperties();
+    public GenericResponse getTotalProperty();
 }

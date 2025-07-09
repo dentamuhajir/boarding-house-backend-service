@@ -1,6 +1,7 @@
 package id.kostfinder.app.features.property.service.impl;
 
 import com.github.javafaker.Faker;
+import id.kostfinder.app.exception.GeneralException;
 import id.kostfinder.app.features.property.model.Property;
 import id.kostfinder.app.features.property.model.PropertyFacility;
 import id.kostfinder.app.features.property.repository.PropertyFacilityRepository;
@@ -10,10 +11,7 @@ import id.kostfinder.app.response.GenericResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -70,6 +68,23 @@ public class PropertyServiceImpl implements PropertyService {
                 .success(true)
                 .message("Get a list of property")
                 .data(property)
+                .build();
+    }
+
+    public GenericResponse getTotalProperty() {
+        Long totalProperty = 0L;
+        Map<String, Long> result = new HashMap<>();
+
+        try {
+            totalProperty = propertyRepository.count();
+            result.put("totalProperty", totalProperty);
+        } catch (Exception e) {
+            throw new GeneralException(500, e.getMessage());
+        }
+        return GenericResponse.builder()
+                .success(true)
+                .code(200)
+                .data(result)
                 .build();
     }
 }
