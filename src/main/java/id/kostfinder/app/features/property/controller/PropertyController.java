@@ -18,8 +18,14 @@ public class PropertyController {
         return ResponseEntity.ok("Success");
     }
     @GetMapping(value = "property")
-    ResponseEntity<?> getProperties() {
+    ResponseEntity<GenericResponse> getProperties() {
         GenericResponse response = propertyService.getProperties();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "property/total")
+    ResponseEntity<GenericResponse> getTotalProperty() {
+        GenericResponse response = propertyService.getTotalProperty();
         return ResponseEntity.ok(response);
     }
 }
